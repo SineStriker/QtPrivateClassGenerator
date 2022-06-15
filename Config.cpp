@@ -301,6 +301,7 @@ bool GenerateDerivedClassSource(const std::string &dir,
         return false;
     }
 
+    std::string BASE_NAME;
     std::string CLASS_NAME;
     std::string INSERT_EXTENDED;
 
@@ -310,6 +311,7 @@ bool GenerateDerivedClassSource(const std::string &dir,
     std::string INSERT_CONSTRUCTOR_INIT_LIST;
     std::string INSERT_CONSTRUCTOR_P_INIT_LIST;
 
+    BASE_NAME = baseName;
     CLASS_NAME = className;
 
     if (!args.empty()) {
@@ -344,6 +346,7 @@ bool GenerateDerivedClassSource(const std::string &dir,
             CLASS_NAME.c_str(),
             CLASS_NAME.c_str(),
             INSERT_CONSTRUCTOR_P_ARGS.c_str(),
+            BASE_NAME.c_str(),
             INSERT_CONSTRUCTOR_P_INIT_LIST.c_str()
     );
 

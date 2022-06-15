@@ -99,7 +99,7 @@ const char DerivedClassSource[] = "#include \"%s.h\"\n" // CLASS_NAME
                                   "%s::~%s() {\n" // CLASS_NAME CLASS_NAME
                                   "}\n"
                                   "\n"
-                                  "%s::%s(%sPrivate &d%s) : Base(d%s) {\n" // CLASS_NAME CLASS_NAME CLASS_NAME INSERT_CONSTRUCTOR_P_ARGS INSERT_CONSTRUCTOR_P_INIT_LIST
+                                  "%s::%s(%sPrivate &d%s) : %s(d%s) {\n" // CLASS_NAME CLASS_NAME CLASS_NAME INSERT_CONSTRUCTOR_P_ARGS BASE_NAME INSERT_CONSTRUCTOR_P_INIT_LIST
                                   "    d.init();\n"
                                   "}";
 
