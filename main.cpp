@@ -9,12 +9,14 @@ void showHelp() {
     printf("\n");
 
     printf("Options:\n");
-    printf("  %-12s%s\n", "-a", "Set more arguments, format: Class,Name,Default");
-    printf("  %-12s%s\n", "-m", "Set more macros at the beginning of class");
+    printf("  %-12s%s\n", "-a", "Add a set of arguments, format: Class,Name,Default");
+    printf("  %-12s%s\n", "-m", "Add a macro at the beginning of class");
+    printf("  %-12s%s\n", "-n", "Add a namespace");
     printf("  %-12s%s\n", "-b", "Set base class");
     printf("  %-12s%s\n", "-o", "Set output directory");
     printf("  %-12s%s\n", "-p", "Set project name");
     printf("  %-12s%s\n", "-d", "Generate derived private class, the base class must be specified");
+    printf("  %-12s%s\n", "-x", "Generate private codes into public source file");
     printf("\n");
 
     printf("Templates:\n");
@@ -36,9 +38,12 @@ int main(int argc, char *argv[]) {
 
     std::vector<Argument> args;
     std::vector<std::string> macros;
+    std::vector<std::string> namespaces;
     std::string base;
     std::string project;
     bool isBasic = true;
+
+    bool mergeSource = false;
 
     std::string dir;
 
@@ -63,6 +68,11 @@ int main(int argc, char *argv[]) {
                 macros.emplace_back(argv[i + 1]);
                 i++;
             }
+        } else if (!strcmp(argv[i], "-n")) {
+            if (i < argc - 1) {
+                namespaces.emplace_back(argv[i + 1]);
+                i++;
+            }
         } else if (!strcmp(argv[i], "-b")) {
             if (i < argc - 1) {
                 base = argv[i + 1];
@@ -80,6 +90,8 @@ int main(int argc, char *argv[]) {
             }
         } else if (!strcmp(argv[i], "-d")) {
             isBasic = false;
+        } else if (!strcmp(argv[i], "-x")) {
+            mergeSource = true;
         } else if (!strcmp(argv[i], "--qobject")) {
             qobject = true;
         } else if (!strcmp(argv[i], "--qwidget")) {
@@ -109,16 +121,16 @@ int main(int argc, char *argv[]) {
     }
 
     if (isBasic) {
-        if (!GenerateBaseClassHeader(dir, className, base, args, macros, project)) {
+        if (!GenerateBaseClassHeader(dir, className, base, args, namespaces, macros, project)) {
             goto failed;
         }
-        if (!GenerateBaseClassSource(dir, className, base, args)) {
+        if (!GenerateBaseClassSource(dir, className, base, args, namespaces, mergeSource)) {
             goto failed;
         }
-        if (!GenerateBasePrivateHeader(dir, className, base, args, project)) {
+        if (!GenerateBasePrivateHeader(dir, className, base, args, namespaces, project)) {
             goto failed;
         }
-        if (!GenerateBasePrivateSource(dir, className, base, args)) {
+        if (!mergeSource && !GenerateBasePrivateSource(dir, className, base, args, namespaces)) {
             goto failed;
         }
     } else {
@@ -126,16 +138,16 @@ int main(int argc, char *argv[]) {
             printf("Missing base class name.\n");
             return 1;
         }
-        if (!GenerateDerivedClassHeader(dir, className, base, args, macros, project)) {
+        if (!GenerateDerivedClassHeader(dir, className, base, args, namespaces, macros, project)) {
             goto failed;
         }
-        if (!GenerateDerivedClassSource(dir, className, base, args)) {
+        if (!GenerateDerivedClassSource(dir, className, base, args, namespaces, mergeSource)) {
             goto failed;
         }
-        if (!GenerateDerivedPrivateHeader(dir, className, base, args, project)) {
+        if (!GenerateDerivedPrivateHeader(dir, className, base, args, namespaces, project)) {
             goto failed;
         }
-        if (!GenerateDerivedPrivateSource(dir, className, base, args)) {
+        if (!mergeSource && !GenerateDerivedPrivateSource(dir, className, base, args, namespaces)) {
             goto failed;
         }
     }

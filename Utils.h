@@ -14,7 +14,9 @@ namespace StringUtils {
 
     std::string TrimRight(const std::string &s, const char *t = WHITESPACE);
 
-    std::vector<std::string> Split(const std::string &s, const std::string &delimiters = " ");
+    std::vector<std::string> Split(const std::string &s, const std::string &delimiter = " ");
+
+    std::string Join(const std::vector<std::string> &list, const std::string &delimiter = ",");
 
     std::string ToUpperCase(const std::string &s);
 };
