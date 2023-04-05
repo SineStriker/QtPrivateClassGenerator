@@ -24,17 +24,22 @@ Then you can generate `Derived` and `DerivedPrivate` files.
 
 ### Usage
 
-`-a` tells generator to add an argument to constructor. (Optional)
+`-a` Add an argument to constructor. (Optional)
 
-`-m` tells generator to add a macro at the beginning of class. (Optional)
+`-m` Add a macro at the beginning of class. (Optional)
 
-`-o` tells generator the output directory, the default is current working directory. (Optional)
+`-n` Add a namespace before definition. (Optional)
 
-`-p` tells generator the project name, it will used in header definition. (Optional)
+`-o` Specify output directory, the default is current working directory. (Optional)
 
-`-b` tells generator the base class name.
+`-p` Specify project name, it will be used in header definition. (Optional)
 
-`-d` tells generator that the private class is derived from a base class, and the base class must be specified.
+`-b` Specify base class name.
+
+`-d` Generate a class derived from a base class, and the base class must be specified.
+
+`-x` Generate private implementations into public class's source file.
+
 
 ### Templates
 

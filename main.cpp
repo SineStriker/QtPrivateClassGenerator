@@ -16,7 +16,7 @@ void showHelp() {
     printf("  %-12s%s\n", "-o", "Set output directory");
     printf("  %-12s%s\n", "-p", "Set project name");
     printf("  %-12s%s\n", "-d", "Generate derived private class, the base class must be specified");
-    printf("  %-12s%s\n", "-x", "Generate private codes into public source file");
+    printf("  %-12s%s\n", "-x", "Generate private implementations into public source file");
     printf("\n");
 
     printf("Templates:\n");
