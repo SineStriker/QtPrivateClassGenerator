@@ -28,12 +28,12 @@ struct Argument {
 
     bool parse(const std::string &arg) {
         auto arr = StringUtils::Split(arg, ",");
-        if (arr.size() < 3) {
+        if (arr.size() < 2) {
             return false;
         }
         Class = arr[0];
         Name = arr[1];
-        if (arg.size() >= 3) {
+        if (arr.size() >= 3) {
             Default = arr[2];
         }
         return true;
